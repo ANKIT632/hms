@@ -9,6 +9,7 @@ import NavProfile from "./NavProfile.component";
 import NavTimeline from "./NavTimeline.component";
 import NavLeaves from "./NavLeave.component";
 import RightMenuBar from './RightMenuBar.component';
+import { FaRegThumbsDown } from "react-icons/fa";
 
 function UserProfile() {
 
@@ -47,7 +48,9 @@ function UserProfile() {
               <IoMdMenu className="absolute right-2 top-0 text-3xl hover:text-blue-500 cursor-pointer md:hidden" onClick={() => setIsShowMenue((pre) => !pre)} />
             </dev>
 
-            <div className="flex gap-2 text-xs" ><GrKey className="text-green-400 cursor-pointer" title="Change password " /><FaPencilAlt className="cursor-pointer" title="Edit " /></div>
+            <div className="flex gap-2 text-xs" ><GrKey className="text-green-400 cursor-pointer" title="Change password " /><FaPencilAlt className="cursor-pointer" title="Edit " />
+            <FaRegThumbsDown className="cursor-pointer text-red-500" title="Disable" />
+            </div>
           </div>
 
           <div className="">
