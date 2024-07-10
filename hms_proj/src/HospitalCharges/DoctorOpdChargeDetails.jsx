@@ -93,7 +93,7 @@ function DoctorOpdChargeDetails({ setIsShowDetails }) {
 
                 {/* div1 */}    
 
-                    <ul  className="p-4 text-sm grid grid-cols-2 gap-4 sm:grid-cols-1">
+                    <ul  className="p-4 text-sm grid grid-cols-2 xs:gap-4 max-xs:grid-cols-1">
                         <li className="flex justify-between "><p className="font-semibold"> Doctor</p><p>		Doctor Victim Blame</p>
                         </li>
                      

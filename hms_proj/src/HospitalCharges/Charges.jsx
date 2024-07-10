@@ -13,10 +13,10 @@ import * as XLSX from 'xlsx';
 import ParseCsv from 'papaparse';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import ShowPopAddForm from "./ShowPopAddForm";
+
 import { TfiAngleLeft } from "react-icons/tfi";
 import { TfiAngleRight } from "react-icons/tfi";
-import ShowPopEditForm from "./ShowPopEditForm";
+import ShowPopAddForm from "./ShowPopChargesForm";
 import axios from "axios";
 import ChargeTrData from "./ChargeTableData";
 
@@ -25,13 +25,38 @@ export const Charges = () => {
 
 
     const [isShowForm, setIsShowForm] = useState(false);
-    const [isShowEditForm, setIsShowEditForm] = useState(false);
-  
+
+    const [colFilterList, setColFilterList] = useState(false);
+
+    const [colFilter, setColFilter] = useState({
+        chargeCategory: true,
+        chargeType: true,
+        code: true,
+        standardCharge: true
+
+    });
+
+    const setSpecificFilterTrue = (columnName) => {
+        setColFilter((prevFilters) => ({
+            ...prevFilters,
+            [columnName]: !prevFilters[columnName]
+        }));
+    };
+
+    const resetFilterHandler = () => {
+        setColFilter({
+            chargeCategory: true,
+            chargeType: true,
+            code: true,
+            standardCharge: true
+        })
+    }
+
 
     const tableData = [
         {}, {}
-
     ];
+
 
     const len = 0;
 
@@ -103,29 +128,42 @@ export const Charges = () => {
                 </div>
                 <hr className="w-[98%]  mx-auto border-t border-gray-300" />
 
-                <div className="p-4 flex  md:justify-between max-md:flex-col-reverse  items-center max-md:gap-4 " >
+                <div className="p-4 flex  md:justify-between max-md:flex-col-reverse  items-center max-md:gap-4 relative"  >
                     <input type="text" placeholder="Search..." className="outline-none font-semibold  border-b border-gray-300  text-sm focus:border-blue-400 w-fit max-md:max-w-[130px]" />
 
                     <div className="flex   border-b  border-gray-300  text-gray-600 ">
-                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400" onClick={copyTableData}>
-                            <ImCopy className="cursor-pointer text-sm " title="Copy" />
+                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400 cursor-pointer" onClick={copyTableData}>
+                            <ImCopy className=" text-sm " title="Copy" />
                         </div>
 
-                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400 " onClick={downloadExcelHandler}>
-                            <FaRegFileExcel className="cursor-pointer text-sm " title="Excel" />
+                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400 cursor-pointer " onClick={downloadExcelHandler}>
+                            <FaRegFileExcel className=" text-sm " title="Excel" />
                         </div>
-                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400" onClick={downloadCSVDataHandler}>
-                            <FaRegFileAlt className="cursor-pointer text-sm " title="CSV" />
+                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400 cursor-pointer" onClick={downloadCSVDataHandler}>
+                            <FaRegFileAlt className=" text-sm " title="CSV" />
                         </div>
-                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400" onClick={downloadPDFHandler}>
-                            <FaRegFilePdf className="cursor-pointer text-sm " title="PDF" />
+                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400 cursor-pointer" onClick={downloadPDFHandler}>
+                            <FaRegFilePdf className=" text-sm " title="PDF" />
                         </div>
-                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400">
-                            <FaPrint className="cursor-pointer text-sm " title="Print" />
+                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400 cursor-pointer">
+                            <FaPrint className=" text-sm " title="Print" />
                         </div>
-                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400">
-                            <FaColumns className="cursor-pointer text-sm " title="Columns" />
+                        <div className="p-1 hover:bg-gray-200 active:bg-gray-400 cursor-pointer " onClick={() => setColFilterList((pre) => !pre)}>
+                            <FaColumns className=" text-sm " title="Columns" />
+
+
                         </div>
+                        {colFilterList && <ul className="absolute bg-gray-400 right-10 top-10 text-sm w-40 shadow-gray-300 shadow-lg font-medium mt-4 rounded-md">
+                            <li className={`py-1 pl-4 active:bg-gray-100 cursor-pointer  ${colFilter.chargeCategory ? 'text-white' : 'bg-white text-black'}`} onClick={() => setSpecificFilterTrue('chargeCategory')}>Charge Category</li>
+
+                            <li className={`py-1 pl-4 active:bg-gray-100 cursor-pointer  ${colFilter.chargeType ? 'text-white' : 'bg-white text-black'}`} onClick={() => setSpecificFilterTrue('chargeType')}>Charge Type</li>
+
+                            <li className={`py-1 pl-4 active:bg-gray-100 cursor-pointer  ${colFilter.code ? 'text-white' : 'bg-white text-black'}`} onClick={() => setSpecificFilterTrue('code')}>Code</li>
+
+                            <li className={`py-1 pl-4 active:bg-gray-100 cursor-pointer  ${colFilter.standardCharge ? 'text-white' : 'bg-white text-black'}`} onClick={() => setSpecificFilterTrue('standardCharge')}>Standard Charge ($)</li>
+
+                            <li className="py-1 pl-4 cursor-pointer bg-white active:bg-gray-100" onClick={resetFilterHandler}>Restore visibility</li>
+                        </ul>}
                     </div>
                 </div>
 
@@ -133,31 +171,31 @@ export const Charges = () => {
                     <table className="w-full  ">
                         <thead className="">
                             <tr className="border-b ">
-                                <th
+                                {colFilter.chargeCategory && <th
                                     scope="col"
                                     className="text-left text-sm font-medium  pb-2 "
                                 >
                                     Charge Category
-                                </th>
-                                <th
+                                </th>}
+                                {colFilter.chargeType && <th
                                     scope="col"
                                     className="text-left text-sm font-medium  pb-2  "
                                 >
                                     Charge Type
-                                </th>
-                                <th
+                                </th>}
+                                {colFilter.code && <th
                                     scope="col"
                                     className="text-left text-sm font-medium  pb-2 "
                                 >
                                     Code
-                                </th>
+                                </th>}
 
-                                <th
+                                {colFilter.standardCharge && <th
                                     scope="col"
                                     className="text-right text-sm font-medium  pb-2 max-xs:hidden"
                                 >
-                                    Standard Charge
-                                </th>
+                                    Standard Charge ($)
+                                </th>}
 
                             </tr>
 
@@ -165,7 +203,7 @@ export const Charges = () => {
 
                         {(len === 0) ? <tbody className="border-b ">
                             {tableData.map((data, idx) => {
-                                return <ChargeTrData key={idx} data={data} setIsShowEditForm={setIsShowEditForm}/>
+                                return <ChargeTrData key={idx} data={data} colFilter={colFilter} />
                             })
                             }
                         </tbody>
@@ -192,10 +230,7 @@ export const Charges = () => {
             </div>
 
 
-            {isShowForm && <ShowPopAddForm setIsShowForm={setIsShowForm} heading={"Charges"} />}
-
-            {isShowEditForm && <ShowPopEditForm setIsShowEditForm={setIsShowEditForm} heading={"Charges"} />}
-
+            {isShowForm && <ShowPopAddForm setIsShowForm={setIsShowForm} heading={"Add Charges"} />}
 
 
         </div>

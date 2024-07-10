@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+
 import { ImCross } from "react-icons/im";
 
 
-function ShowPopAddEditForm({ setIsShowEditForm, heading }) {
+function ShowPopAddEditForm({ setIsShowForm, heading,data }) {
 
 
 
@@ -15,10 +15,10 @@ function ShowPopAddEditForm({ setIsShowEditForm, heading }) {
 
         <div className="relative bg-white shadow-lg z-10 max-sm:w-[94%] max-md:w-[80%] md:w-[900px] h-fit mt-5 rounded-sm overflow-y-auto max-h-[90vh]">
 
-                <div className="flex bg-blue-400 text-white  p-2 text-lg font-semibold justify-between items-center"><p >{"Edit " + heading}</p><ImCross className="text-xs  right-4 top-4 hover:text-gray-600 cursor-pointer" onClick={() => setIsShowEditForm((pre) => !pre)} /></div>
+                <div className="flex bg-blue-400 text-white  p-2 text-lg font-semibold justify-between items-center"><p >{ heading}</p><ImCross className="text-xs  right-4 top-4 hover:text-gray-600 cursor-pointer" onClick={() => setIsShowForm((pre) => !pre)} /></div>
 
 
-                <form className="px-5 py-2 flex flex-col gap-3 mt-10 ">
+                <form className="px-5 py-2 flex flex-col gap-3 ">
 
                     <div className="grid grid-cols-3 max-md:grid-cols-1 gap-2">
                         <div className="flex flex-col ">

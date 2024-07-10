@@ -1,21 +1,27 @@
+/* eslint-disable react/prop-types */
 import { IoMdMenu } from "react-icons/io";
 import { FaPencil } from "react-icons/fa6";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { TfiAngleDown } from "react-icons/tfi";
 import { TfiAngleUp } from "react-icons/tfi";
 import { useState } from "react";
-import ShowPopChargesDetails from './ShowPopChargesDetails'
+import ShowPopChargesDetails from './ShowPopChargesDetails';
+import ShowPopAddEditForm from "./ShowPopChargesForm";
 
-function ChargeTrData({ setIsShowEditForm, data }) {
+
+function ChargeTrData({ data ,colFilter}) {
 
     const [isShowList, setIsShowList] = useState(false);
     const [isShowDetails, setIsShowDetails] = useState(false);
+    const [isShowForm,setIsShowForm]=useState(false);
+
+ 
 
     return (
         <>
             <tr className=" hover:bg-gray-100 group h-[30px]">
 
-                <td className=" pl-1 ">
+               {colFilter.chargeCategory&&<td className=" pl-1 ">
                      <div className="flex items-center gap-2">
                     <div className="xs:hidden h-fit border border-gray-300 rounded-sm bg-gray-100 p-1  text-[8px] cursor-pointer " onClick={() => setIsShowList((pre) => !pre)} >
                         {isShowList ? <TfiAngleUp /> : <TfiAngleDown />}
@@ -23,12 +29,12 @@ function ChargeTrData({ setIsShowEditForm, data }) {
 
                     <div className="text-xs hidden max-md:group-hover:block ">
 
-                        <div className="flex gap-2 text-gray-700 ">
+                        <div className="flex gap-1 text-gray-700 ">
                             <div className="p-0.5 cursor-pointer bg-white">
                                 <IoMdMenu onClick={() => setIsShowDetails((pre) => !pre)} title="Show" />
                             </div>
                             <div className="p-0.5 cursor-pointer bg-white">
-                                <FaPencil onClick={() => setIsShowEditForm((pre) => !pre)} title="Edit" />
+                                <FaPencil onClick={() => setIsShowForm((pre) => !pre)} title="Edit" />
                             </div>
                             <div className="p-0.5 cursor-pointer bg-white">
                                 <RiDeleteBinFill title="Delete" />
@@ -40,23 +46,24 @@ function ChargeTrData({ setIsShowEditForm, data }) {
                     xyz
                     </div>
                     </div>
-                </td>
+                </td>}
 
-                <td className=" text-[13px]  ">
+                {colFilter.chargeType && <td className=" text-[13px]  ">
                     {"xyz"}
-                </td>
-                <td className=" text-[13px]  ">
+                </td>}
+
+                {colFilter.code && <td className=" text-[13px]  ">
                     {"xyz"}
-                </td>
+                </td>}
                 
 
-                <td className="text-xs hidden md:group-hover:block  pr-2 ">
-                    <div className="flex gap-2  text-gray-700 pt-1.5 justify-end ">
+                {colFilter.standardCharge && <><td className="text-xs hidden md:group-hover:block  pr-2 ">
+                    <div className="flex gap-1  text-gray-700 pt-1.5 justify-end ">
                         <div className="p-0.5  cursor-pointer bg-white">
                             <IoMdMenu onClick={() => setIsShowDetails((pre) => !pre)} title="Show" />
                         </div>
                         <div className="p-0.5 cursor-pointer bg-white">
-                            <FaPencil onClick={() => setIsShowEditForm((pre) => !pre)} title="Edit" />
+                            <FaPencil onClick={() => setIsShowForm((pre) => !pre)} title="Edit" />
                         </div>
                         <div className="p-0.5 cursor-pointer bg-white">
                             <RiDeleteBinFill title="Delete" />
@@ -66,7 +73,7 @@ function ChargeTrData({ setIsShowEditForm, data }) {
 
                 <td className=" text-[13px] text-right md:group-hover:hidden max-xs:hidden pr-2">
                     {"xyz"}
-                </td>
+                </td></>}
 
 
 
@@ -84,6 +91,8 @@ function ChargeTrData({ setIsShowEditForm, data }) {
             }
 
             {isShowDetails && <ShowPopChargesDetails setIsShowDetails={setIsShowDetails} />}
+
+            {isShowForm && <ShowPopAddEditForm setIsShowForm={setIsShowForm} heading={"Edit Charges"} data={data} />}
         </>
     )
 }

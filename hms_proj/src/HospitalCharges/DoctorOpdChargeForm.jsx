@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { ImCross } from "react-icons/im";
-
+import { VscTriangleDown } from "react-icons/vsc";
+import { VscTriangleUp } from "react-icons/vsc";
 
 function DoctorOpdChargeForm({ setIsShowForm, heading }) {
 
@@ -33,8 +34,11 @@ function DoctorOpdChargeForm({ setIsShowForm, heading }) {
 
                             <div className="border  w-full left-0">
 
-                            <div className=" cursor-pointer" onClick={()=>setShowList((pre)=>!pre)}>
+                            <div className=" cursor-pointer flex  justify-between " onClick={()=>setShowList((pre)=>!pre)}>
                              <p className="text-sm text-gray-700 py-1.5 pl-2">Doctor Victim Blame</p>
+                             <div className="self-center pr-2 text-gray-600">
+                             {showList?<VscTriangleUp className=" right-2 top-2 "/>:<VscTriangleDown className=" right-2 top-2 "/>}
+                             </div>
                              </div>
 
                            

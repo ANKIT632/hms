@@ -13,20 +13,20 @@ import * as XLSX from 'xlsx';
 import ParseCsv from 'papaparse';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import ShowPopAddForm from "./ShowPopAddForm";
+
 import { TfiAngleLeft } from "react-icons/tfi";
 import { TfiAngleRight } from "react-icons/tfi";
-import ShowPopEditForm from "./ShowPopEditForm";
+import ShowPopCharegeCategoryAddForm from "./ShowPopCharegeCategoryForm";
 import axios from "axios";
-import ChargeTrData from "./ChargeTableData";
+
+import ChargeCategoryTableData from './ChargesCategoryTableData' 
 
 
-export const Charges = () => {
+export const ChargesCategory = () => {
 
 
     const [isShowForm, setIsShowForm] = useState(false);
-    const [isShowEditForm, setIsShowEditForm] = useState(false);
-  
+
 
     const tableData = [
         {}, {}
@@ -90,13 +90,13 @@ export const Charges = () => {
             <div className=" bg-white    border border-gray-300">
 
                 <div className="px-3 py-1 flex bg-white justify-between  ">
-                    <h2 className="text-xl">Charges Details</h2>
+                    <h2 className="text-xl">Charge Category List</h2>
 
 
                     <div className="flex mt-0.5  text-white  items-center  bg-blue-500 rounded-sm px-2   gap-1 hover:bg-btn-hover active:bg-gray-600 cursor-pointer h-6 " onClick={() => setIsShowForm((pre) => !pre)}>
-                        <p className="text-[13px]">Add Charge</p>
+                        <p className="text-[13px]">Add Charge Category</p>
 
-                        <FaPlus className=" text-sm  " />
+                        <FaPlus className=" text-sm " />
 
                     </div>
 
@@ -137,26 +137,26 @@ export const Charges = () => {
                                     scope="col"
                                     className="text-left text-sm font-medium  pb-2 "
                                 >
-                                    Charge Category
+                                 Name
                                 </th>
                                 <th
                                     scope="col"
-                                    className="text-left text-sm font-medium  pb-2  "
+                                    className="text-left text-sm font-medium  pb-2  max-xs:text-right"
                                 >
-                                    Charge Type
+                                 Description
                                 </th>
                                 <th
                                     scope="col"
-                                    className="text-left text-sm font-medium  pb-2 "
+                                    className="text-left text-sm font-medium  pb-2 max-xs:hidden"
                                 >
-                                    Code
+                                 Charge Type
                                 </th>
 
                                 <th
                                     scope="col"
                                     className="text-right text-sm font-medium  pb-2 max-xs:hidden"
                                 >
-                                    Standard Charge
+                                  Action
                                 </th>
 
                             </tr>
@@ -165,7 +165,7 @@ export const Charges = () => {
 
                         {(len === 0) ? <tbody className="border-b ">
                             {tableData.map((data, idx) => {
-                                return <ChargeTrData key={idx} data={data} setIsShowEditForm={setIsShowEditForm}/>
+                                return <ChargeCategoryTableData key={idx} data={data} />
                             })
                             }
                         </tbody>
@@ -192,14 +192,11 @@ export const Charges = () => {
             </div>
 
 
-            {isShowForm && <ShowPopAddForm setIsShowForm={setIsShowForm} heading={"Charges"} />}
-
-            {isShowEditForm && <ShowPopEditForm setIsShowEditForm={setIsShowEditForm} heading={"Charges"} />}
-
+            {isShowForm && <ShowPopCharegeCategoryAddForm setIsShowForm={setIsShowForm} heading={"Add Charge Category"} />}
 
 
         </div>
     );
 };
 
-export default Charges;
+export default ChargesCategory;

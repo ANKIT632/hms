@@ -2,11 +2,9 @@
 import { IoMdMenu } from "react-icons/io";
 import { FaPencil } from "react-icons/fa6";
 import { RiDeleteBinFill } from "react-icons/ri";
-import { TfiAngleDown } from "react-icons/tfi";
-import { TfiAngleUp } from "react-icons/tfi";
 import { useState } from "react";
 import DoctorOpdChargeDetails from "./DoctorOpdChargeDetails";
-import DoctorOpdChargeForm from "./DoctorOpdChargeForm";
+import DoctorOpdChargeEditForm from "./DoctorOpdChargeForm";
 
 function DoctorOpdChargeTableData({  data }) {
 
@@ -67,7 +65,7 @@ function DoctorOpdChargeTableData({  data }) {
 
             { isShowDetails && <DoctorOpdChargeDetails setIsShowDetails={setIsShowDetails} />}
 
-            {isShowForm && <DoctorOpdChargeForm setIsShowForm={setIsShowForm} heading={"Edit Charge"}/>}
+            {isShowForm && <DoctorOpdChargeEditForm setIsShowForm={setIsShowForm} heading={"Edit Charge"}/>}
         </>
     )
 }

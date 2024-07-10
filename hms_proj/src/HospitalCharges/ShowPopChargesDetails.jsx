@@ -93,7 +93,7 @@ function ShowPopChargesDeatils({ setIsShowDetails }) {
 
                 {/* div1 */}
 
-                <div className="p-4 text-sm grid grid-cols-2 gap-4 sm:grid-cols-1">
+                <div className="p-4 text-sm grid grid-cols-2 xs:gap-4 max-xs:grid-cols-1">
 
                     <ul>
                         <li className="flex justify-between "><p className="font-semibold"> Charge Type</p><p>	Procedures</p>
